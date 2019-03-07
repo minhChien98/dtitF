@@ -26,7 +26,7 @@ export default function request(url, options) {
         options.headers,
     );
     options.headers = newHeaders;
-    options.credentials = 'include';
+    // options.credentials = 'include';
 
     return fetch(url, options)
         .then(checkStatus)

@@ -1,0 +1,42 @@
+body
+{
+    width: 100%;
+    height: 100%;
+    background: #FF7CA8;
+}
+.main
+{
+    margin-top: 10%;
+}
+.form
+{
+    background: #ff99ba;
+    border: 1px solid gray;
+    border-radius: 10px;
+}
+.form-register
+{
+    display: none;
+}
+.answer
+{
+    width: 100%;
+    height: 120px;
+}
+.time
+{
+    font-size: 30px;
+    text-align: center;
+}
+.score
+{
+    padding-top: 20px;
+}
+
+#form-login{
+    display: block;
+}
+
+#form-register {
+    display: none;
+}
