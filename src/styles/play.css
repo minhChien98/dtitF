@@ -1,0 +1,59 @@
+.cardFixed
+{
+    display: fixed;
+    top: 0;
+    background: #56baed !important;
+    color: white;
+}
+span
+{
+    font-size: 30px;
+}
+.time
+{
+    margin:30px auto;
+}
+.question
+{
+    font-size: 25px;
+    max-height: 250px;
+    border-radius: 15px;
+}
+.answer
+{
+    vertical-align: middle;
+    border: 1px solid rgba(0, 0, 0, 0.54);
+    border-radius: 25px;
+    font-size: 20px;
+    padding: 10px 20px;
+    widows: '100%';
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+.answer:hover
+{
+    background: #d8d8d8;
+    /* box-shadow: 10px 10px #F5F5F5; */
+}
+.textanswer
+{
+    font-size: 20px;
+    padding: 0 30px;
+}
+.box
+{
+    position: absolute;
+    top: 35%;
+}
+
+.modal1 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0
+}

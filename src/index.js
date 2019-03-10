@@ -10,6 +10,10 @@ import { Provider } from 'react-redux';
 import createSagaMiddleware from 'redux-saga';
 import {mySaga} from './actions/index';
 
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import 'bootstrap-css-only/css/bootstrap.min.css';
+import 'mdbreact/dist/css/mdb.css'
+
 const sagaMiddleware = createSagaMiddleware();
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

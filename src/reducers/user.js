@@ -1,26 +1,50 @@
 import * as types from './../constants/ActionTypes'
-import { fromJS } from 'immutable';
 
 // var initState = {};
-export const initState = fromJS({});
+export const initState = {};
 
 const user = (state = initState, action) =>{
     switch(action.type){
         case types.REGISTER:
-            return state
-                .set('body', action.data)
-                .set('error', false)
-                .set('loading', true);
+            return state = {
+                body: action.data,
+                success: false,
+                error: false,
+                loading: true,
+            }
         case types.REGISTER_SUCCESS:
-            return state
-                .set('succes', true)
-                .set('error', false)
-                .set('loading', true);
+            return state = {
+                success: true,
+                error: false,
+                loading: false,
+            }
         case types.REGISTER_FAILED:
-            return state
-                .set('succes', false)
-                .set('error', false)
-                .set('loading', true);
+            return state = {
+                success: false,
+                error: true,
+                loading: false,
+            }
+        case types.LOGIN:
+            return state = {
+                body: action.data,
+                success: false,
+                error: false,
+                loading: true,
+            }
+        case types.LOGIN_SUCCESS:
+            return state = {
+                token: action.token,
+                name: action.name,
+                success: true,
+                error: false,
+                loading: false,
+            }
+        case types.LOGIN_FAILED:
+            return state = {
+                success: false,
+                error: true,
+                loading: false,
+            }
         default:
             return state;
     }
