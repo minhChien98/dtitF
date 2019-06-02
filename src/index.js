@@ -21,6 +21,7 @@ const store = createStore(appReducers, /* preloadedState, */ composeEnhancers(
     applyMiddleware(sagaMiddleware)
 ));
 
+sagaMiddleware.run(mySaga);
 ReactDOM.render(
                 <Provider store = {store}>
                     <App />
@@ -28,7 +29,6 @@ ReactDOM.render(
                 document.getElementById('root')
             );
 
-sagaMiddleware.run(mySaga);
 
 
 // If you want your app to work offline and load faster, you can change

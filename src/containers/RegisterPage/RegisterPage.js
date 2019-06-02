@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import * as types from './../../constants/ActionTypes';
 import { connect } from 'react-redux';
+import './../../styles/style.css';
 
 class RegisterPage extends Component {
     constructor(props) {
@@ -17,17 +18,22 @@ class RegisterPage extends Component {
         const { user, history } = this.props;
         if (user.success) {
             history.push('/login');
+            this.props.onReserNoti();
+      }
+      if (user.error){
+          window.alert("Đăng kí thất bại!");
+          this.props.onReserNoti();
         }
     }
 
     render() {
         const { studentId, pass, name, phone } = this.state;
         return (
-            <div className="col-6 container mt-10">
-            <div className="wrapper fadeInDown mt-5">
+            <div className="col-md-6 col-sm-10 container">
+            <div className="wrapper fadeInDown">
                 <div id="formContent">
-                    <div class="card cardTop">
-                        <div class="card-body">
+                    <div className="card cardTop">
+                        <div className="card-body">
                          ĐĂNG KÝ TÀI KHOẢN
                         </div>
                       </div>
@@ -58,7 +64,7 @@ class RegisterPage extends Component {
                             value={phone}
                         />
                         <input
-                            type="text"
+                            type="password"
                             className="fadeIn third"
                             name="pass"
                             placeholder="Mật khẩu"
@@ -116,6 +122,7 @@ const mapStateToProps = state =>{
 const mapDispatchToProps = dispatch => {
     return {
         onRegister: user => dispatch({ type: types.REGISTER, user }),
+        onReserNoti: () => dispatch({ type: types.RESET_NOTI }),
     };
 }
 

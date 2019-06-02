@@ -35,6 +35,7 @@ const user = (state = initState, action) =>{
             return state = {
                 token: action.token,
                 name: action.name,
+                role: action.role,
                 success: true,
                 error: false,
                 loading: false,
@@ -43,6 +44,12 @@ const user = (state = initState, action) =>{
             return state = {
                 success: false,
                 error: true,
+                loading: false,
+            }
+        case types.RESET_NOTI:
+            return state = {
+                success: false,
+                error: false,
                 loading: false,
             }
         default:
