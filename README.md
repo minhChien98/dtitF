@@ -1,2 +1,2 @@
-# assd
-source code cho phần thi ánh sánh soi đường
+# đấu trường IT
+source code cho phần thi đấu trường IT 2019
