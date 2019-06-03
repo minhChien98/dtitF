@@ -17,7 +17,7 @@ class AdminPage extends Component {
     next: true,
     ans: true,
     indexQues: 0,
-    canStartHelp: false,
+    canStartHelp: true,
   }
 
   componentWillMount() {
@@ -100,7 +100,7 @@ class AdminPage extends Component {
     window.socketIO.emit('admin', { command: 4500 });
     const { currentList, questionList } = this.state;
     this.props.onGetQuestionInList(questionList[currentList + 1]._id);
-    this.setState({ currentList: currentList + 1, indexQues: -1, canStartHelp: true });
+    this.setState({ currentList: currentList + 1, indexQues: -1, canStartHelp: false });
   }
 
   showHelp = () => {
