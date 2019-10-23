@@ -41,6 +41,7 @@ const questionList = (state = initState, action) => {
     case types.CHECK_SUCCESS:
       return state = {
         success: true,
+        type: action.data,
         error: false,
         loading: false,
       }
