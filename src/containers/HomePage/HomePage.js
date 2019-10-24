@@ -25,7 +25,8 @@ class HomePage extends Component {
       status: true,
       disableAns: false,
       receiveAnsToClient: false,
-      catchPig: false
+      catchPig: false,
+      disableClick: false
     };
   }
 
@@ -77,12 +78,18 @@ class HomePage extends Component {
     });
     window.socketIO.on("stopTime", () => {
       clearInterval(this.state.timeInterval);
+      this.setState({ disableClick: true });
       // console.log(data)
     });
     window.socketIO.on("continueTime", () => {
+      this.setState({ disableClick: false });
       // eslint-disable-next-line react/no-direct-mutation-state
       this.state.timeInterval = setInterval(() => {
         const { time } = this.state;
+        if (Number(time) === 1 && this.state.disableAns) {
+          this.setState({ catchPig: false });
+          clearInterval(this.state.timeInterval);
+        }
         this.setState({ time: time - 1 });
       }, 1000);
       // console.log(data)
@@ -341,6 +348,7 @@ class HomePage extends Component {
 
   openModalHandler = answer => {
     if (this.state.disableAns === false) {
+      if (this.state.disableClick) return;
       this.setState({
         isShowing: true,
         answer
