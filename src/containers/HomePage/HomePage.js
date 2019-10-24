@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import * as types from "./../../constants/ActionTypes";
 import { LOGOUT } from "../../config";
 import Modal from "./../../components/modal";
+import CatchPig from "./../../components/catchPig";
 import qs from "qs";
 
 class HomePage extends Component {
@@ -23,7 +24,8 @@ class HomePage extends Component {
       correctAnswer: "",
       status: true,
       disableAns: false,
-      receiveAnsToClient: false
+      receiveAnsToClient: false,
+      catchPig: false
     };
   }
 
@@ -116,6 +118,10 @@ class HomePage extends Component {
         // eslint-disable-next-line react/no-direct-mutation-state
         this.state.timeInterval = setInterval(() => {
           const { time } = this.state;
+          if (Number(time) === 1 && this.state.disableAns) {
+            this.setState({ catchPig: false });
+            clearInterval(this.state.timeInterval);
+          }
           this.setState({ time: time - 1 });
         }, 1000);
       }
@@ -184,13 +190,13 @@ class HomePage extends Component {
                 Chào mừng bạn {name} đã đến với cuộc thi Đấu trường IT năm 2019
               </MDBCard>
               {/* <button type="button" className="btn btn-primary" onClick={() => this.toRedirect('contestOne')}>Bắt đầu</button> */}
-              <button
+              {/* <button
                 type="button"
                 className="btn btn-secondary"
                 onClick={this.logout}
               >
                 Đăng xuất
-              </button>
+              </button> */}
             </MDBCol>
             <MDBCol md="2" />
           </MDBRow>
@@ -259,6 +265,7 @@ class HomePage extends Component {
                     ? { display: "block" }
                     : { display: "none" }
                 }
+                handleChangeCatchPig={this.handleChangeCatchPig}
               />
             </div>
           </div>
@@ -281,6 +288,9 @@ class HomePage extends Component {
             </MDBRow>
           </MDBContainer>
         );
+      }
+      if (this.state.catchPig) {
+        return <CatchPig />;
       }
       return (
         <MDBContainer>
@@ -309,13 +319,13 @@ class HomePage extends Component {
                 Bạn đã bị loại, hãy chờ cứu trợ nha!
               </MDBCard>
               {/* <button type="button" className="btn btn-primary" onClick={() => this.toRedirect('contestOne')}>Bắt đầu</button> */}
-              <button
+              {/* <button
                 type="button"
                 className="btn btn-secondary"
                 onClick={this.logout}
               >
                 Đăng xuất
-              </button>
+              </button> */}
             </MDBCol>
             <MDBCol md="2" />
           </MDBRow>
@@ -323,6 +333,11 @@ class HomePage extends Component {
       );
     }
   }
+
+  handleChangeCatchPig = () => {
+    const { catchPig } = this.state;
+    this.setState({ catchPig: !catchPig });
+  };
 
   openModalHandler = answer => {
     if (this.state.disableAns === false) {
@@ -335,7 +350,7 @@ class HomePage extends Component {
 
   handleDisableAnswer = () => {
     this.setState({ disableAns: true });
-    clearInterval(this.state.timeInterval);
+    // clearInterval(this.state.timeInterval);
   };
 
   closeModalHandler = () => {

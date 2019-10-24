@@ -1,18 +1,18 @@
-import React, { Component } from 'react';
-import * as types from './../../constants/ActionTypes';
-import { connect } from 'react-redux'
-import './../../styles/style.css';
+import React, { Component } from "react";
+import * as types from "./../../constants/ActionTypes";
+import { connect } from "react-redux";
+import "./../../styles/style.css";
 // const socket = socketIOClient(SOCKET_BASE);
-import socketIOClient from 'socket.io-client';
-import { SOCKET_BASE } from '../../config';
+import socketIOClient from "socket.io-client";
+import { SOCKET_BASE } from "../../config";
 
 class LoginPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      studentId: '',
-      pass: '',
-    }
+      studentId: "",
+      pass: ""
+    };
   }
 
   componentWillMount() {
@@ -20,33 +20,31 @@ class LoginPage extends Component {
   }
 
   componentDidMount() {
-    window.socketIO.on('auth', data => {
+    window.socketIO.on("auth", data => {
       if (data.code === 3) {
-        localStorage.setItem('userId', data.user._id);
+        localStorage.setItem("userId", data.user._id);
         // localStorage.setItem('token', data.token);
-        localStorage.setItem('name', data.user.name);
-        localStorage.setItem('studentId', data.user.studentId);
+        localStorage.setItem("name", data.user.name);
+        localStorage.setItem("studentId", data.user.studentId);
       }
-
     });
   }
 
   componentWillReceiveProps(props) {
     const { user, history } = props;
-    if (user.success) {
+    if (user.successLogin) {
       // socket.emit('login', { command: 1000, token: user.token });
 
       // socket.on('login', () => {
-        const socket = socketIOClient(SOCKET_BASE);
-        window.socketIO = socket;
-        socket.emit('login', { command: 1000, 'token': user.token });//login
+      const socket = socketIOClient(SOCKET_BASE);
+      window.socketIO = socket;
+      socket.emit("login", { command: 1000, token: user.token }); //login
       // });
 
-      if (user.role === 'admin') {
-        history.push('/admin');
+      if (user.role === "admin") {
+        history.push("/admin");
       } else {
-        history.push('/');
-
+        history.push("/");
       }
       this.props.onReserNoti();
     }
@@ -60,12 +58,10 @@ class LoginPage extends Component {
     const { studentId, pass } = this.state;
     return (
       <div className="col-md-6 col-sm-10 container ">
-        <div className="wrapper fadeInDown" style={{ paddingBottom: '10px' }}>
+        <div className="wrapper fadeInDown" style={{ paddingBottom: "10px" }}>
           <div id="formContent">
             <div className="card cardTop">
-              <div className="card-body">
-                ĐĂNG NHẬP
-                        </div>
+              <div className="card-body">ĐĂNG NHẬP</div>
             </div>
 
             <form onSubmit={this.handleSubmit} className="mt-5">
@@ -96,7 +92,12 @@ class LoginPage extends Component {
             </form>
             <hr />
             <p className="fadeIn fourth">Bạn chưa có tài khoản?</p>
-            <input type="button" className="fadeIn fourth" onClick={() => this.toRedirect('register')} value="Đăng ký" />
+            <input
+              type="button"
+              className="fadeIn fourth"
+              onClick={() => this.toRedirect("register")}
+              value="Đăng ký"
+            />
           </div>
         </div>
       </div>
@@ -108,11 +109,11 @@ class LoginPage extends Component {
     const { studentId, pass } = this.state;
     const user = {
       acc: studentId,
-      pass,
-    }
+      pass
+    };
     // socket.emit('login', { user })
     this.props.onLogin(user);
-  }
+  };
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value });
@@ -121,11 +122,11 @@ class LoginPage extends Component {
   toRedirect = slug => {
     // console.log(this.props.history)
     this.props.history.push(`/${slug}`);
-  }
+  };
 
   onKeyDown = event => {
     // 'keypress' event misbehaves on mobile so we track 'Enter' key via 'keydown' event
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       event.preventDefault();
       event.stopPropagation();
       this.handleSubmit(event);
@@ -136,14 +137,17 @@ class LoginPage extends Component {
 const mapStateToProps = state => {
   return {
     user: state.user
-  }
-}
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
     onLogin: user => dispatch({ type: types.LOGIN, user }),
-    onReserNoti: () => dispatch({ type: types.RESET_NOTI }),
+    onReserNoti: () => dispatch({ type: types.RESET_NOTI })
   };
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginPage);

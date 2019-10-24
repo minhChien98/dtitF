@@ -53,11 +53,11 @@ class AdminPage extends Component {
         {/* <div className="card cardCustom card-body"> */}
         <div className="col-md-12 col-sm-12 container card cardCustom">
           <div className="col-md-5 col-sm-5">Xin chào {name}.</div>
-          <div className="col-md-5 col-sm-5">
+          {/* <div className="col-md-5 col-sm-5">
             <button className="btn btn-danger" onClick={this.logOut}>
               Đăng xuất
             </button>
-          </div>
+          </div> */}
         </div>
 
         {/* </div> */}
