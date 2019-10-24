@@ -86,12 +86,14 @@ class HomePage extends Component {
       // console.log(data)
     });
     window.socketIO.on("receiveAnswer", data => {
+      console.log(data);
       const { answer } = this.props;
-      if (answer.correct.die && Number(answer.correct.die) === 2) {
+      if (Number(data.round) === 2 && answer.correct === undefined) {
         this.props.history.push("/view");
       }
+      console.log(answer);
       this.setState({
-        status: answer.correct.result,
+        status: answer.correct ? answer.correct.result : false,
         receiveAnsToClient: true
       });
       // console.log(data)
@@ -153,7 +155,6 @@ class HomePage extends Component {
       })
         .then(result => result.json())
         .then(data => {
-          console.log(data);
           if (Number(data.code) === 0) {
             localStorage.removeItem("studentId");
             localStorage.removeItem("name");
