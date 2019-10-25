@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard } from "mdbreact";
 import { connect } from "react-redux";
 import * as types from "./../../constants/ActionTypes";
-import { LOGOUT } from "../../config";
+import { LOGOUT, SCORE } from "../../config";
 import Modal from "./../../components/modal";
 import CatchPig from "./../../components/catchPig";
 import qs from "qs";
@@ -26,7 +26,8 @@ class HomePage extends Component {
       disableAns: false,
       receiveAnsToClient: false,
       catchPig: false,
-      disableClick: false
+      disableClick: false,
+      scoreCatchPig: 0
     };
   }
 
@@ -88,6 +89,16 @@ class HomePage extends Component {
         const { time } = this.state;
         if (Number(time) === 1 && this.state.disableAns) {
           this.setState({ catchPig: false });
+          const token = localStorage.getItem("token");
+          const studentId = localStorage.getItem("userId");
+          fetch(`${SCORE}/${studentId}`, {
+            method: "POST",
+            headers: {
+              "x-access-token": token,
+              "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: qs.stringify({ score: this.state.scoreCatchPig })
+          });
           clearInterval(this.state.timeInterval);
         }
         this.setState({ time: time - 1 });
@@ -95,12 +106,16 @@ class HomePage extends Component {
       // console.log(data)
     });
     window.socketIO.on("receiveAnswer", data => {
-      console.log(data);
+      // console.log(data);
       const { answer } = this.props;
-      if (Number(data.round) === 2 && answer.correct && Object.keys(answer.correct).length === 0) {
+      if (
+        Number(data.round) === 2 &&
+        answer.correct &&
+        answer.correct.die &&
+        Number(answer.correct.die) === 2
+      ) {
         this.props.history.push("/view");
       }
-      console.log(answer);
       this.setState({
         status: answer.correct ? answer.correct.result : false,
         receiveAnsToClient: true
@@ -127,6 +142,16 @@ class HomePage extends Component {
           const { time } = this.state;
           if (Number(time) === 1 && this.state.disableAns) {
             this.setState({ catchPig: false });
+            const token = localStorage.getItem("token");
+            const studentId = localStorage.getItem("userId");
+            fetch(`${SCORE}/${studentId}`, {
+              method: "POST",
+              headers: {
+                "x-access-token": token,
+                "Content-Type": "application/x-www-form-urlencoded"
+              },
+              body: qs.stringify({ score: this.state.scoreCatchPig })
+            });
             clearInterval(this.state.timeInterval);
           }
           this.setState({ time: time - 1 });
@@ -297,7 +322,7 @@ class HomePage extends Component {
         );
       }
       if (this.state.catchPig) {
-        return <CatchPig />;
+        return <CatchPig handleCatchPig={this.handleCatchPig} />;
       }
       return (
         <MDBContainer>
@@ -340,6 +365,12 @@ class HomePage extends Component {
       );
     }
   }
+
+  handleCatchPig = () => {
+    let { scoreCatchPig } = this.state;
+    scoreCatchPig++;
+    this.setState({ scoreCatchPig });
+  };
 
   handleChangeCatchPig = () => {
     const { catchPig } = this.state;

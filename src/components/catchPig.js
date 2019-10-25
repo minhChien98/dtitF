@@ -32,6 +32,7 @@ class CatchPig extends React.Component {
     const square = this.getRandomArbitrary(25, 50);
     const widthScreen = this.getRandomArbitrary(10, window.screen.width - 50);
     const heightScreen = this.getRandomArbitrary(10, window.screen.height - 50);
+    this.props.handleCatchPig();
 
     this.setState({ square, widthScreen, heightScreen });
   };

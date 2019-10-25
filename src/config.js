@@ -9,6 +9,7 @@ export const QUESTIONS = "questionlists";
 
 export const PLAYGROUND = "playgrounds";
 export const ANSWER = "users/answer";
+export const SCORE = `${BASE_API}/users/score`;
 export const LOGOUT = `${BASE_API}/users/logout`;
 export const PLAYED = "playgrounds/played";
 export const PLAY = "playgrounds/play";

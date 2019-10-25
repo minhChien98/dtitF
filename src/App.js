@@ -11,6 +11,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import socketIOClient from "socket.io-client";
 import { SOCKET_BASE } from "./config";
 import ViewPage from "./containers/ViewPage/ViewPage";
+import ScoreBoard from "./containers/ScoreBoard/ScoreBoard";
 const socket = socketIOClient(SOCKET_BASE);
 window.socketIO = socket;
 
@@ -55,6 +56,12 @@ class App extends Component {
               path="/view"
               exact={true}
               component={ViewPage}
+              history={this.props.history}
+            />
+            <Route
+              path="/scoreboard"
+              exact={true}
+              component={ScoreBoard}
               history={this.props.history}
             />
             {/* <Route
