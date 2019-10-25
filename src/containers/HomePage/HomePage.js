@@ -97,7 +97,7 @@ class HomePage extends Component {
     window.socketIO.on("receiveAnswer", data => {
       console.log(data);
       const { answer } = this.props;
-      if (Number(data.round) === 2 && answer.correct === undefined) {
+      if (Number(data.round) === 2 && answer.correct && Object.keys(answer.correct).length === 0) {
         this.props.history.push("/view");
       }
       console.log(answer);
